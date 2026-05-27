@@ -35,4 +35,6 @@
 .card-list .card p {
     position: absolute;
     bottom: 10px;
+    text-decoration: none;
+    color: white;
 }
