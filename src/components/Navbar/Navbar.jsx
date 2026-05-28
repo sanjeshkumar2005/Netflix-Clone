@@ -1,13 +1,26 @@
 import React, { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Navbar.css'
 import logo from '../../assets/logo.png'
 import search_icon from '../../assets/search_icon.svg'
 import bell_icon from '../../assets/bell_icon.svg'
 import profile_img from '../../assets/profile_img.png'
 import caret_icon from '../../assets/caret_icon.svg'
+import { supabase } from '../../supabase.js'
 
 const Navbar = () => {
+    const navigate = useNavigate();
     const navRef = useRef();
+
+    const handleLogout = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error("Logout error:", error);
+        } else {
+            navigate('/login');
+        }
+    };
+
     useEffect(() => {
         window.addEventListener('scroll', () => {
             if (window.scrollY >= 80) {
@@ -38,7 +51,7 @@ const Navbar = () => {
                     <img src={profile_img} alt="profile" className='profile' />
                     <img src={caret_icon} alt="caret" />
                     <div className="dropdown">
-                        <p>Sign Out of Netflix</p>
+                        <p onClick={handleLogout}>Sign Out of Netflix</p>
                     </div>
                 </div>
             </div>
